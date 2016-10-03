@@ -1,0 +1,25 @@
+{% extends 'FbeenUserBundle:Email:layout.html.twig' %}
+
+{% trans_default_domain 'fbeen_user' %}
+
+{% block body %}
+    <table>
+        <tr>
+            <td colspan="2"><h1>{{ 'email.approve_new_account_title'|trans }}</h1></td>
+        </tr>
+        <tr>
+            <td colspan="2">{{ 'email.approve_new_account_body'|trans }}</td>
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+            <td><strong>{{ 'email.username'|trans }}: </strong></td>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <td><strong>{{ 'email.email'|trans }}: </strong></td>
+            <td>{{ user.email }}</td>
+        </tr>
+    </table>
+{% endblock %}

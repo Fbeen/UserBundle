@@ -1,0 +1,20 @@
+{% extends 'FbeenUserBundle:Email:layout.html.twig' %}
+
+{% trans_default_domain 'fbeen_user' %}
+
+{% block body %}
+    <table>
+        <tr>
+            <td><h1>{{ 'email.confirm_your_mailaddress_title'|trans }}</h1></td>
+        </tr>
+        <tr>
+            <td>{{ 'email.confirm_your_mailaddress_body'|trans }}</td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td><strong><a href="{{ confirmation_url }}">{{ 'email.confirm_mailaddress'|trans }}</a></strong></td>
+        </tr>
+    </table>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% trans_default_domain 'fbeen_user' %}
+<table style="font-family: Arial, Helvetica, sans-serif;">
+    <tr>
+        <td><a href="{{ urlHomepage }}">{% if companyLogo %}<img src="{{ companyLogo }}">{% else %}{{ companyName }}{% endif %}</a></td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            {% block body %}{% endblock %}
+        </td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="font-size: 12px;">
+            {{ 'email.sincerely'|trans }},<br>
+            <br>
+            the administrator<br>
+        </td>
+    </tr>
+</table>

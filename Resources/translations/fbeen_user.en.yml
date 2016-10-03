@@ -1,0 +1,133 @@
+# registration
+register:
+    title: Register
+    header: Register
+    form:
+        username: Username
+        email: Email
+        password: Password
+        confirm_password: Repeat password
+        submit: Register
+    flash:
+        please_register: Before you can login you have to registrate yourself. Please fill out the form below and click Register.
+    
+confirm_email:
+    title: Confirm email
+    header: Confirm your mail address
+    text: We have sent you an email. Please click the link inside this email to verify your mail address and to finish your registration process.
+       
+email_confirmation:
+    with_approval:
+        title: Email confirmed
+        header: You have confirmed your mailaddress
+        message: You have confirmed your mailaddress. Now your account still has to be approved by an administrator. You will receive a new email about this
+    without_approval: 
+        title: Email confirmed
+        header: Registration successfull
+        message: Congratulations, you are now registrated. Enjoy our website
+    
+confirmation:
+    with_approval:
+        title: Account has to be approved
+        header: Account has to be approved
+        message: Now your account still has to be approved by an administrator. You will receive a new email about this
+    without_approval: 
+        title: Registerd!
+        header: Registration successfull
+        message: Congratulations, you are now registrated. Enjoy our website
+ 
+# profile pages
+show:
+    title: My profile
+    header: My profile
+    username: Username
+    email: Email
+    registrated: Registrated
+    change_password: Change password
+    edit_profile: Edit my profile
+    
+edit:
+    title: Edit my profile
+    header: Edit my profile
+    form:
+        username: Username
+        email: Email
+        password: Enter your password
+        submit: Save changes
+    flash:
+        has_changed: Your changes were saved!
+
+# change password page
+password:
+    title: Change password
+    header: Change my password
+    form:
+        submit: Save changes
+        old_password: Old password
+        new_password: New password
+        confirm_new_password: Repeat your new password
+    flash:
+        has_changed: You successfully changed your password!
+
+# login page
+login:
+    title: Login
+    header: Login
+    form:
+        email: Email
+        password: Password
+        submit: Login
+    password_link: I forgot my password
+    register_link: I am new and want to make an account
+
+# reset password pages 1-4
+reset1:
+    title: Reset password
+    header: Reset my password
+    form:
+        email: Please enter your mail address
+        submit: Reset password
+        
+reset2:
+    title: Reset my password
+    header: Reset my password
+    message: An email has been sent at the given mail address
+    
+reset3:
+    title: Choose new password
+    header: Choose a new password
+    form:
+        submit: Save changes
+        
+reset4:
+    title: Password changed
+    header: Your password has been changed
+    message: You successfully changed your password
+    text1: You can now
+    login: login
+    text2: with your new password
+
+validator:
+    password_incorrect: The password is not correct.
+    old_password_incorrect: The old password is not correct.
+    password_too_short: The password must contain at least %amount% characters.
+    digits_too_less: The password must contain at least one digit.|The password must contain at least %amount% digits.
+    letters_too_less: The password must contain at least one letter.|The password must contain at least %amount% letters.
+    special_too_less: The password must contain at least one special character.|The password must contain at least %amount% special characters.
+    reset_already_requested: You already requested to reset your password in the past 24 hours.
+    email_unknown: This mailaddress is unknown.
+    email_exists: This email is already in use.
+
+email:
+    username: Username
+    email: Email
+    confirm_your_mailaddress_title: "Confirm your mailaddress"
+    confirm_your_mailaddress_body: "Confirm your mailaddress by clicking the link below:"
+    register_confirmation_admin_title: A new account
+    register_confirmation_admin_body: A new account has been created.
+    register_confirmation_user_title: Welcome
+    register_confirmation_user_body: Congratulations your request is accepted. Welcome on board.
+    approve_new_account_title: "Approval asked for a new account"
+    approve_new_account_body: "There is a new account that asks for approval."
+    confirm_mailaddress: Confirm your mailaddress
+    sincerely: Sincerely

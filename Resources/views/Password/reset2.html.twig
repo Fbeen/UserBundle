@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% trans_default_domain 'fbeen_user' %}
+
+{% block title -%}
+    {{ 'reset2.title'|trans }}
+{%- endblock %}
+
+{% block fbeen_user -%}
+    <h1>{{ 'reset2.header'|trans }}</h1>
+    
+    <div class="alert alert-success">
+        {{ 'reset2.message'|trans }}.
+    </div>
+    
+{%- endblock %}

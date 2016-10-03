@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% trans_default_domain 'fbeen_user' %}
+
+{% block title -%}
+    {{ 'show.title'|trans }}
+{%- endblock %}
+
+{% block fbeen_user -%}
+    {% for flash_message in app.session.flashBag.get('fbeen.user.profile') %}
+        <div class="alert alert-success">
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+    
+    <h1>{{ 'show.header'|trans }}</h1>
+    
+    <table class="table table-striped">
+        <tr>
+            <th>{{ 'show.username'|trans }}</th>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'show.email'|trans }}</th>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'show.registrated'|trans }}</th>
+            <td>{{ user.created|date('d-m-Y H:i') }}</td>
+        </tr>
+    </table>
+    
+    <div class="btn-group" role="group">
+        <a href="{{ path('fbeen_user_password_change') }}" class="btn btn-default">{{ 'show.change_password'|trans }}</a>
+        <a href="{{ path('fbeen_user_profile_edit') }}" class="btn btn-primary">{{ 'show.edit_profile'|trans }}</a>
+  </div>
+{%- endblock %}

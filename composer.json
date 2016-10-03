@@ -1,0 +1,27 @@
+{
+    "name" : "fbeen/userbundle",
+    "description" : "This Bundle adds complete user integration on top of the Symfony security bundle. It lets you register and manage users for your website and let the users login with or without providers such as Facebook or Google, edit their profiles, change or reset their passwords.",
+    "type" : "symfony-bundle",
+    "authors" : [{
+        "name" : "Frank Beentjes",
+        "email" : "frankbeen@gmail.com"
+    }],
+    "keywords" : [
+        "User Bundle"
+    ],
+    "license" : [
+        "MIT"
+    ],
+    "require" : {
+        "php": "^5.5.9|^7.0",
+        "symfony/framework-bundle": "^2.7|^3.0",
+        "fbeen/mailerbundle": "dev-master",
+        "hybridauth/hybridauth": "dev-master"
+    },
+    "autoload" : {
+        "psr-0" : {
+            "Fbeen\\UserBundle" : ""
+        }
+    },
+    "target-dir" : "Fbeen/UserBundle"
+}

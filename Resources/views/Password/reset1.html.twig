@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% trans_default_domain 'fbeen_user' %}
+
+{% block title -%}
+    {{ 'reset1.title'|trans }}
+{%- endblock %}
+
+{% block fbeen_user -%}
+    <h1>{{ 'reset1.header'|trans }}</h1>
+    
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <div class="form-group">
+            <button class="btn btn-lg btn-primary pull-right" type="submit">{{ 'reset1.form.submit'|trans }}</button>
+        </div>
+    {{ form_end(form) }}
+    
+{%- endblock %}

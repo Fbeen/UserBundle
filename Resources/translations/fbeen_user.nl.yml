@@ -1,0 +1,134 @@
+# registration
+register:
+    title: Registreren
+    header: Registreren
+    form:
+        username: Gebruikersnaam
+        email: Email
+        password: Wachtwoord
+        confirm_password: Herhaal wachtwoord
+        submit: Registreren
+    flash:
+        please_register: Voordat u kunt inloggen moet u zich eenmalig registreren. Vul a.u.b. het onderstaande formulier in en klik op Registreren.
+            
+confirm_email:
+    title: Bevestig email
+    header: Bevestig uw mailadres
+    text: We hebben u een email gestuurd. Klik alstublieft op de link in deze email om uw mailadres te bevestigen en het registratieproces te voltooien
+    
+email_confirmation:
+    with_approval:
+        title: Account moet nog goedgekeurd worden
+        header: Account moet nog goedgekeurd worden
+        message: U heeft uw mailadres bevestigd maar uw account moet nog goedgekeurd worden door een administrator. U ontvangt hierover een email.
+    without_approval: 
+        title: Registratie voltooid
+        header: Registratie voltooid
+        message: Gefeliciteerd, u bent nu geregistreerd. Wij wensen u veel plezier op onze website
+    
+confirmation:
+    with_approval:
+        title: Account moet nog goedgekeurd worden
+        header: Account moet nog goedgekeurd worden
+        message: U heeft de registratie voltooid maar uw account moet nog goedgekeurd worden door een administrator. U ontvangt hierover een email.
+    without_approval: 
+        title: Registratie voltooid
+        header: Registratie voltooid
+        message: Gefeliciteerd, u bent nu geregistreerd. Wij wensen u veel plezier op onze website
+
+# login page
+login:
+    title: Login
+    header: Inloggen
+    form:
+        email: Email
+        password: Wachtwoord
+        submit: Login
+    password_link: Ik ben mijn wachtwoord vergeten
+    register_link: Ik ben nieuw en wil een account maken
+
+# profile pages
+show:
+    title: Mijn profiel
+    header: Mijn profiel
+    username: Gebruikersnaam
+    email: Email
+    registrated: Geregistreerd
+    change_password: Verander wachtwoord
+    edit_profile: Bewerk mijn profiel
+    
+edit:
+    title: Profiel bewerken
+    header: Mijn profiel bewerken
+    form:
+        username: Gebruikersnaam
+        email: Email
+        password: Wachtwoord
+        submit: Opslaan
+    flash:
+        has_changed: De veranderingen zijn opgeslagen!
+
+# change password page
+password:
+    title: Verander mijn wachtwoord
+    header: Verander mijn wachtwoord
+    form:
+        submit: Opslaan
+        old_password: Oud wachtwoord
+        new_password: Nieuw wachtwoord
+        confirm_new_password: Herhaal het nieuwe wachtwoord
+    flash:
+        has_changed: Uw wachtwoord is succesvol gewijzigd!
+
+# reset password pages 1-4
+reset1:
+    title: Reset wachtwoord
+    header: Reset mijn wachtwoord
+    form:
+        email: Vul uw mailadres in
+        submit: Reset wachtwoord
+
+reset2:
+    title: Reset mijn wachtwoord
+    header: Reset mijn wachtwoord
+    message: Er is een email verstuurd naar het door u opgegeven adres
+
+reset3:
+    title: Kies nieuw wachtwoord
+    header: Kies een nieuw wachtwoord
+    form:
+        submit: Opslaan
+
+reset4:
+    title: Wachtwoord is veranderd
+    header: Uw wachtwoord is veranderd
+    message: Uw nieuwe wachtwoord is opgeslagen
+    text1: U kunt nu
+    login: inloggen
+    text2: met uw nieuwe wachtwoord
+
+validator:
+    password_incorrect: Het wachtwoord is onjuist.
+    old_password_incorrect: Het oude wachtwoord is onjuist.
+    password_too_short: Het wachtwoord moet uit minimaal %amount% karakters bestaan.
+    digits_too_less: Het wachtwoord moet uit minimaal één cijfer bestaan.|Het wachtwoord moet uit minimaal %amount% cijfers bestaan.
+    letters_too_less: Het wachtwoord moet uit minimaal één letter bestaan.|Het wachtwoord moet uit minimaal %amount% letters bestaan.
+    special_too_less: Het wachtwoord moet uit minimaal één speciaal teken bestaan.|Het wachtwoord moet uit minimaal %amount% speciale tekens bestaan.
+    reset_already_requested: U heeft uw wachtwoord al eens opnieuw opgevraagd in de afgelopen 24 uur.
+    email_unknown: Dit mailadres is bij ons niet bekend.
+    email_exists: Dit mailadres is al in gebruik.
+
+email:
+    username: Gebruikersnaam
+    email: Email
+    confirm_your_mailaddress_title: "Bevestig uw e-mailadres"
+    confirm_your_mailaddress_body: "Bevestig uw mailadres door op de onderstaande snelkoppeling te klikken:"
+    register_confirmation_admin_title: Een nieuwe aanmelding
+    register_confirmation_admin_body: Er is een nieuwe aanmelding binnen gekomen.
+    register_confirmation_user_title: Welkom
+    register_confirmation_user_body: Gefeliciteerd uw aanmelding is accepteerd. Wij heten u van harte welkom.
+    approve_new_account_title: "Goedkeuring gevraagd voor een nieuwe aanmelding"
+    approve_new_account_body: "Er is een nieuwe aanmelding binnen gekomen die nog goedgekeurd dient te worden."
+    confirm_mailaddress: Bevestig mailadres
+    sincerely: Met vriendelijke groet
+    

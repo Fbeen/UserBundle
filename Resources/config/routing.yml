@@ -1,0 +1,98 @@
+# registration section #########################################################
+fbeen_user_register:
+    path:      /register
+    defaults:  { _controller: FbeenUserBundle:Register:register }
+    methods:  [GET, POST]
+
+fbeen_user_register_confirm_email:
+    path:      /register/confirm-email
+    defaults:  { _controller: FbeenUserBundle:Register:confirmEmail }
+    methods:  [GET]
+
+fbeen_user_register_email_confirmation:
+    path:      /register/email-confirmation/{token}
+    defaults:  { _controller: FbeenUserBundle:Register:emailConfirmation }
+    methods:  [GET]
+
+fbeen_user_register_confirmation:
+    path:      /register/confirmation
+    defaults:  { _controller: FbeenUserBundle:Register:confirmation }
+    methods:  [GET]
+
+
+
+# security section #############################################################
+fbeen_user_security_login:
+    path:      /login
+    defaults:  { _controller: FbeenUserBundle:Security:login }
+    methods:  [GET, POST]
+
+login_check:
+    pattern:  /login_check
+
+logout:
+    path: /logout
+
+
+
+# profile section ##############################################################
+fbeen_user_profile_show:
+    path:      /profile/show
+    defaults:  { _controller: FbeenUserBundle:Profile:show }
+    methods:  [GET]
+
+fbeen_user_profile_edit:
+    path:      /profile/edit
+    defaults:  { _controller: FbeenUserBundle:Profile:edit }
+    methods:  [GET, POST]
+
+
+
+# password section #############################################################
+fbeen_user_password_change:
+    path:      /password/change
+    defaults:  { _controller: FbeenUserBundle:Password:change }
+    methods:  [GET, POST]
+
+fbeen_user_password_reset1:
+    path:      /password/reset
+    defaults:  { _controller: FbeenUserBundle:Password:reset1 }
+    methods:  [GET, POST]
+
+fbeen_user_password_reset2:
+    path:      /password/reset/confirm-email
+    defaults:  { _controller: FbeenUserBundle:Password:reset2 }
+    methods:  [GET]
+
+fbeen_user_password_reset3:
+    path:      /password/reset/choose-new/{token}
+    defaults:  { _controller: FbeenUserBundle:Password:reset3 }
+    methods:  [GET, POST]
+
+fbeen_user_password_reset4:
+    path:      /password/reset/confirmation
+    defaults:  { _controller: FbeenUserBundle:Password:reset4 }
+    methods:  [GET]
+
+
+
+
+# provider section #############################################################
+fbeen_user_provider_process:
+    path:      /connect/process
+    defaults:  { _controller: FbeenUserBundle:Provider:process }
+    methods:  [GET]
+
+fbeen_user_provider_connect:
+    path:      /connect/{provider}
+    defaults:  { _controller: FbeenUserBundle:Provider:connect }
+    methods:  [GET]
+
+
+
+
+# approve account section ######################################################
+fbeen_user_approve_account:
+    path:      /admin/approve-account/{id}
+    defaults:  { _controller: FbeenUserBundle:ApproveAccount:approve }
+    methods:  [GET|POST]

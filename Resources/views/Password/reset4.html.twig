@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% trans_default_domain 'fbeen_user' %}
+
+{% block title -%}
+    {{ 'reset4.title'|trans }}
+{%- endblock %}
+
+{% block fbeen_user -%}
+    <h1>{{ 'reset4.header'|trans }}</h1>
+    
+    <div class="alert alert-success">
+        {{ 'reset4.message'|trans }}.
+    </div>
+    
+    <p>{{ 'reset4.text1'|trans }} <a href="{{ path('fbeen_user_security_login') }}">{{ 'reset4.login'|trans }}</a> {{ 'reset4.text2'|trans }}.</p>
+    
+{%- endblock %}

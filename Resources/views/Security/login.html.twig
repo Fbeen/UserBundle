@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% trans_default_domain 'fbeen_user' %}
+
+{% block title -%}
+    {{ 'login.title'|trans }}
+{%- endblock %}
+
+{% block fbeen_user -%}
+    <h1>{{ 'login.header'|trans }}</h1>
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if providers|length %}
+        <div class="row providers">
+        {% for provider in providers %}
+            <div class="col-sm-4">
+                <a href="{{ path('fbeen_user_provider_connect', {'provider':provider.name|lower}) }}">
+                {% if provider.image %}
+                    <img src="{{ asset(provider.image) }}" alt="{{ provider.name }}" >
+                {% else %}
+                    {{ provider.name }}
+                {% endif %}
+                </a>
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+    
+    <form action="{{ path('login_check') }}" method="post">
+        <div class="form-group">
+            <label for="username">{{ 'login.form.email'|trans }}</label>
+            <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" />
+        </div>
+        <div class="form-group">
+            <label for="password">{{ 'login.form.password'|trans }}</label>
+            <input class="form-control" type="password" id="password" name="_password" />
+        </div>
+
+        {# http://symfony.com/doc/current/security/csrf_in_login_form.html #}
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+        <div class="form-group">
+            <button class="btn btn-lg btn-primary pull-right" type="submit">{{ 'login.form.submit'|trans }}</button>
+        </div>
+    </form>
+            
+    <p>
+        <a href="{{ path('fbeen_user_password_reset1') }}"><i class="fa-exclamation"></i> {{ 'login.password_link'|trans }}</a>
+        {% if registerUrl %}
+            <br><a href="{{ registerUrl }}"><i class="fa-exclamation"></i> {{ 'login.register_link'|trans }}</a>
+        {% endif %}
+    </p>
+{%- endblock %}

@@ -1,0 +1,16 @@
+services:
+    validator.password:
+        class: Fbeen\UserBundle\Validator\Constraints\PasswordConstraintValidator
+        arguments:
+            - @service_container
+        tags:
+            - { name: validator.constraint_validator }
+            
+    fbeen.user.user_manager:
+        class: Fbeen\UserBundle\Service\UserManager
+        arguments: ['@service_container']
+            
+    fbeen.user.provider_helper:
+        class: Fbeen\UserBundle\Service\ProviderHelper
+        arguments: ['@service_container']
+            
