@@ -15,8 +15,8 @@
     "require" : {
         "php": "^5.5.9|^7.0",
         "symfony/framework-bundle": "^2.7|^3.0",
-        "fbeen/mailerbundle": "dev-master",
-        "hybridauth/hybridauth": "dev-master"
+        "fbeen/mailerbundle": "^1.0",
+        "hybridauth/hybridauth": "^2.7"
     },
     "autoload" : {
         "psr-0" : {
