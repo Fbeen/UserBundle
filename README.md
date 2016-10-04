@@ -655,7 +655,7 @@ fbeen_user:
         nummeric: 0
         letters: 0
         special: 0
-    password_on_profile_edit: true
+    password_on_profile_edit: false
     register:
         confirm_email: true
         admin_approval: false
