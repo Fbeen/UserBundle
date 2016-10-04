@@ -2,7 +2,7 @@ services:
     validator.password:
         class: Fbeen\UserBundle\Validator\Constraints\PasswordConstraintValidator
         arguments:
-            - @service_container
+            - '@service_container'
         tags:
             - { name: validator.constraint_validator }
             

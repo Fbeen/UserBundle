@@ -42,7 +42,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
  //                   ->end()
                 ->end()
-                ->arrayNode('password_constraints')
+                ->arrayNode('password_constraints')->addDefaultsIfNotSet()
 //                    ->prototype('array')
                         ->children()
                             ->integerNode('minlength')->min(4)->defaultValue(6)->end()

@@ -84,7 +84,7 @@ class ProviderHelper
                 return $redirectUrl;
             
             /* otherwise return to the homepage */
-            return $this->container->get('request')->getUriForPath('/');
+            return $this->container->get('request_stack')->getCurrentRequest()->getUriForPath('/');
         }
         
         /* if no user is found with the given mailadress we will ask the user to register and we fill in the username and email fields */
@@ -110,7 +110,7 @@ class ProviderHelper
         $this->container->get("security.context")->setToken($token); //now the user is logged in
 
         //now dispatch the login event
-        $request = $this->container->get('request');
+        $request = $this->container->get('request_stack')->getCurrentRequest();
         $event = new InteractiveLoginEvent($request, $token);
         $this->container->get("event_dispatcher")->dispatch("security.interactive_login", $event);
     }

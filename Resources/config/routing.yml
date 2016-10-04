@@ -28,7 +28,7 @@ fbeen_user_security_login:
     methods:  [GET, POST]
 
 login_check:
-    pattern:  /login_check
+    path:  /login_check
 
 logout:
     path: /logout
