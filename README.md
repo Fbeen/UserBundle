@@ -625,12 +625,14 @@ class User implements AdvancedUserInterface, \Serializable
 }
 ```
 9) Update your database schema
-    $ bin/console doctrine:schema:update --force
-
+```
+$ bin/console doctrine:schema:update --force
+```
 10) Create a new user and promote him to ROLE_SUPER_ADMIN
-$  bin/console fbeen:user:create "My Name" "email@example.com" "password"
-$  bin/console fbeen:user:promote "My Name" ROLE_SUPER_ADMIN
-
+```
+$ bin/console fbeen:user:create "My Name" "email@example.com" "password"
+$ bin/console fbeen:user:promote "My Name" ROLE_SUPER_ADMIN
+```
 11) Add minimal configuration for the FbeenMailerBundle in `app/config/config.yml`
 ```
 fbeen_mailer:
