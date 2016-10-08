@@ -123,6 +123,8 @@ email:
     email: Email
     confirm_your_mailaddress_title: "Confirm your mailaddress"
     confirm_your_mailaddress_body: "Confirm your mailaddress by clicking the link below:"
+    reset_your_password_title: "Reset your password"
+    reset_your_password_body: "Click on the link below to enter a new password:"
     register_confirmation_admin_title: A new account
     register_confirmation_admin_body: A new account has been created.
     register_confirmation_user_title: Welcome
@@ -130,4 +132,5 @@ email:
     approve_new_account_title: "Approval asked for a new account"
     approve_new_account_body: "There is a new account that asks for approval."
     confirm_mailaddress: Confirm your mailaddress
+    reset_password: Enter a new password
     sincerely: Sincerely

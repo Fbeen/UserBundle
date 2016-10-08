@@ -4,6 +4,7 @@ namespace Fbeen\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormError;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -183,7 +184,7 @@ class RegisterController extends Controller
      */
     private function sendConfirmYourMailaddressEmail($user)
     {
-        $confirmationUrl = $this->generateUrl('fbeen_user_register_email_confirmation', array('token' => $user->getConfirmationToken()), TRUE);
+        $confirmationUrl = $this->generateUrl('fbeen_user_register_email_confirmation', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
         
         $this->get('fbeen_mailer')
            ->setTo($user->getEmail())

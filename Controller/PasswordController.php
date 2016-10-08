@@ -4,6 +4,7 @@ namespace Fbeen\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -170,17 +171,18 @@ class PasswordController extends Controller
     
     private function sendResetPasswordConfirmationEmail(UserInterface $user)
     {
-        $confirmationUrl = $this->generateUrl('fbeen_user_password_reset3', array('token' => $user->getConfirmationToken()), TRUE);
+        $confirmationUrl = $this->generateUrl('fbeen_user_password_reset3', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
         
-        $message = \Swift_Message::newInstance()
-            ->setContentType('text/html')
-            ->setSubject('Password reset request')
-            ->setFrom($this->container->getParameter('mailer_sender'))
-            ->setTo($user->getEmail())
-            ->setReplyTo($this->container->getParameter('mailer_general'))
-            ->setBody(
-                $this->renderView('FbeenUserBundle:Email:reset_password_email.html.twig', array('user' => $user, 'confirmation_url' => $confirmationUrl))
-            );
-        $this->get('mailer')->send($message);
+        $this->get('fbeen_mailer')
+           ->setTo($user->getEmail())
+           ->setSubject($this->get('translator')->trans('email.reset_your_password_title', array(), 'fbeen_user'))
+           ->setTemplate($this->getParameter('fbeen_user.emails_to_users.reset_your_password.template'))
+           ->setData(array(
+               'user' => $user,
+               'confirmation_url' => $confirmationUrl
+            ))
+           ->sendMail()
+       ;    
     }
+
 }

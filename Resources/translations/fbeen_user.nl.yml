@@ -123,6 +123,8 @@ email:
     email: Email
     confirm_your_mailaddress_title: "Bevestig uw e-mailadres"
     confirm_your_mailaddress_body: "Bevestig uw mailadres door op de onderstaande snelkoppeling te klikken:"
+    reset_your_password_title: "Reset uw wachtwoord"
+    reset_your_password_body: "Klik op de onderstaande link om uw wachtwoord opnieuw in te stellen:"
     register_confirmation_admin_title: Een nieuwe aanmelding
     register_confirmation_admin_body: Er is een nieuwe aanmelding binnen gekomen.
     register_confirmation_user_title: Welkom
@@ -130,5 +132,6 @@ email:
     approve_new_account_title: "Goedkeuring gevraagd voor een nieuwe aanmelding"
     approve_new_account_body: "Er is een nieuwe aanmelding binnen gekomen die nog goedgekeurd dient te worden."
     confirm_mailaddress: Bevestig mailadres
+    reset_password: Stel een nieuw wachtwoord in
     sincerely: Met vriendelijke groet
     
