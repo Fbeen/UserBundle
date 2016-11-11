@@ -121,6 +121,7 @@ validator:
 email:
     username: Gebruikersnaam
     email: Email
+    password: Wachtwoord
     confirm_your_mailaddress_title: "Bevestig uw e-mailadres"
     confirm_your_mailaddress_body: "Bevestig uw mailadres door op de onderstaande snelkoppeling te klikken:"
     reset_your_password_title: "Reset uw wachtwoord"
@@ -134,4 +135,6 @@ email:
     confirm_mailaddress: Bevestig mailadres
     reset_password: Stel een nieuw wachtwoord in
     sincerely: Met vriendelijke groet
+    new_account_details_user_title: Uw login gegevens
+    new_account_details_user_body: Er is een account voor u aangemaakt en u kunt nu inloggen.
     

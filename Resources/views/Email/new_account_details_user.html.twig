@@ -1,0 +1,28 @@
+{% extends 'FbeenUserBundle:Email:layout.html.twig' %}
+
+{% trans_default_domain 'fbeen_user' %}
+
+{% block body %}
+    <table>
+        <tr>
+            <td colspan="2"><h1>{{ 'email.new_account_details_user_title'|trans }}</h1></td>
+        </tr>
+        <tr>
+            <td colspan="2">{{ 'email.new_account_details_user_body'|trans }}</td>
+        </tr>
+        <tr>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+        </tr>
+       <tr>
+            <td><strong>{{ 'email.email'|trans }}: </strong></td>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <td><strong>{{ 'email.password'|trans }}: </strong></td>
+            <td>{{ password }}</td>
+        </tr>
+     </table>
+{% endblock %}

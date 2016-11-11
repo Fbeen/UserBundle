@@ -47,9 +47,9 @@
     </form>
             
     <p>
-        <a href="{{ path('fbeen_user_password_reset1') }}"><i class="fa-exclamation"></i> {{ 'login.password_link'|trans }}</a>
+        <a href="{{ path('fbeen_user_password_reset1') }}"><i class="fa fa-angle-right" aria-hidden="true"></i> {{ 'login.password_link'|trans }}</a>
         {% if registerUrl %}
-            <br><a href="{{ registerUrl }}"><i class="fa-exclamation"></i> {{ 'login.register_link'|trans }}</a>
+            <br><a href="{{ registerUrl }}"><i class="fa fa-angle-right" aria-hidden="true"></i> {{ 'login.register_link'|trans }}</a>
         {% endif %}
     </p>
 {%- endblock %}

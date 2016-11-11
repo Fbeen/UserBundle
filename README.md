@@ -641,15 +641,7 @@ fbeen_mailer:
         general: info@example.com
         admins: [admin1@gmail.com, admin2@hotmail.com]
 ```
-12)
-To render the forms properly with bootstrap i suggest that you enable the bootstrap form-theme by default in `app/config/config.yml`
-```
-# Twig Configuration
-twig:
-    # ...
-    form_themes:
-        - 'bootstrap_3_layout.html.twig'
-```
+
 ## Configuration
 
 Full configuration with default values:
@@ -693,5 +685,13 @@ fbeen_user:
             enabled: true
         	template: FbeenUserBundle:Email:register_confirmation_user.html.twig
 ```
-
+If you would like to render the formfields on bootstrap style:
+```
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    form_themes:
+        - 'bootstrap_3_layout.html.twig'
+```
 * to be continued

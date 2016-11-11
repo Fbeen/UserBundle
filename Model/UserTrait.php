@@ -1,19 +1,19 @@
 <?php
 
-namespace Fbeen\UserBundle\Entity;
+namespace Fbeen\UserBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Fbeen\UserBundle\Validator\Constraints\PasswordConstraint as Password;
 
 /**
- * @ORM\Table(name="fbeen_users")
- * @ORM\Entity
+ * User trait that you could include into your own User class
+ * 
+ * @link https://github.com/Fbeen/UserBundle
+ * 
+ * @author Frank Beentjes <frankbeen@gmail.com>
  */
-class User implements AdvancedUserInterface, \Serializable
+trait UserTrait
 {
     /**
      * @ORM\Column(type="integer")
@@ -54,28 +54,28 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="created", type="datetime")
      */
     private $created;
-    
+
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="last_request", type="datetime", nullable=true)
      */
     private $lastRequest;
-    
+
     /**
-     * @ORM\Column(name="is_active", type="boolean")
+     * @ORM\Column(name="enabled", type="boolean")
      */
-    private $isActive;
-    
-    /**
-     * @ORM\Column(name="is_admin", type="boolean")
-     */
-    private $isAdmin = 0;
+    private $enabled;
 
     /**
      * @ORM\Column(name="locked", type="boolean")
      */
     private $locked;
+
+    /**
+     * @ORM\Column(name="hidden", type="boolean")
+     */
+    private $hidden = false;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -86,6 +86,13 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $tokenRequested;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="roles", type="array")
+     */
+    private $roles;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -100,15 +107,16 @@ class User implements AdvancedUserInterface, \Serializable
     public function __construct() {
         $this->created = new \DateTime();
         $this->lastRequest = new \DateTime();
-        $this->isActive = true;
+        $this->enabled = true;
         $this->locked = true;
+        $this->roles = array('ROLE_USER');
     }
-    
+
     public function __toString()
     {
         return $this->username;
     }
-
+    
     public function getUsername()
     {
         return $this->username;
@@ -126,20 +134,9 @@ class User implements AdvancedUserInterface, \Serializable
         return $this->password;
     }
 
-    public function getRoles()
-    {
-        if($this->isAdmin)
-            return array('ROLE_USER', 'ROLE_ADMIN');
-        
-        return array('ROLE_USER');
-    }
-
     public function hasRole($role)
     {
-        if($this->isAdmin)
-            return in_array($role, array('ROLE_USER', 'ROLE_ADMIN'));
-        
-        return in_array($role, array('ROLE_USER'));
+        return in_array($role, $this->roles);
     }
 
     public function eraseCredentials()
@@ -163,9 +160,9 @@ class User implements AdvancedUserInterface, \Serializable
 
     public function isEnabled()
     {
-        return $this->isActive;
+        return $this->enabled;
     }
-    
+
    /** @see \Serializable::serialize() */
     public function serialize()
     {
@@ -173,7 +170,7 @@ class User implements AdvancedUserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
-            $this->isActive
+            $this->enabled
             // see section on salt below
             // $this->salt,
         ));
@@ -186,7 +183,7 @@ class User implements AdvancedUserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
-            $this->isActive
+            $this->enabled
             // see section on salt below
             // $this->salt
         ) = unserialize($serialized);
@@ -255,27 +252,27 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set isActive
+     * Set enabled
      *
-     * @param boolean $isActive
+     * @param boolean $enabled
      *
      * @return User
      */
-    public function setIsActive($isActive)
+    public function setEnabled($enabled)
     {
-        $this->isActive = $isActive;
+        $this->enabled = $enabled;
 
         return $this;
     }
 
     /**
-     * Get isActive
+     * Get enabled
      *
      * @return boolean
      */
-    public function getIsActive()
+    public function getEnabled()
     {
-        return $this->isActive;
+        return $this->enabled;
     }
 
     /**
@@ -300,6 +297,30 @@ class User implements AdvancedUserInterface, \Serializable
     public function getLocked()
     {
         return $this->locked;
+    }
+
+    /**
+     * Set hidden
+     *
+     * @param boolean $hidden
+     *
+     * @return User
+     */
+    public function setHidden($hidden)
+    {
+        $this->hidden = $hidden;
+
+        return $this;
+    }
+
+    /**
+     * Get hidden
+     *
+     * @return boolean
+     */
+    public function getHidden()
+    {
+        return $this->hidden;
     }
 
     /**
@@ -447,30 +468,6 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set isAdmin
-     *
-     * @param boolean $isAdmin
-     *
-     * @return User
-     */
-    public function setIsAdmin($isAdmin)
-    {
-        $this->isAdmin = $isAdmin;
-
-        return $this;
-    }
-
-    /**
-     * Get isAdmin
-     *
-     * @return boolean
-     */
-    public function getIsAdmin()
-    {
-        return $this->isAdmin;
-    }
-
-    /**
      * Set lastRequest
      *
      * @param \DateTime $lastRequest
@@ -492,5 +489,42 @@ class User implements AdvancedUserInterface, \Serializable
     public function getLastRequest()
     {
         return $this->lastRequest;
+    }
+
+    /**
+     * Set roles
+     *
+     * @param array $roles
+     *
+     * @return Test
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Get roles
+     *
+     * @return array
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * Add a role
+     *
+     * @return array
+     */
+    public function addRole($role)
+    {
+        if(!$this->hasRole($role))
+        {
+            $this->roles[] = $role;
+        }
     }
 }

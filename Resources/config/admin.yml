@@ -1,0 +1,11 @@
+services:
+    sonata.admin.user:
+        class: Fbeen\UserBundle\Admin\UserAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Main", label: "Users" }
+        arguments:
+            - ~
+            - AppBundle\Entity\User
+            - ~
+        calls:
+            - [ setTranslationDomain, [AppBundle]]

@@ -121,6 +121,7 @@ validator:
 email:
     username: Username
     email: Email
+    password: Wachtwoord
     confirm_your_mailaddress_title: "Confirm your mailaddress"
     confirm_your_mailaddress_body: "Confirm your mailaddress by clicking the link below:"
     reset_your_password_title: "Reset your password"
@@ -134,3 +135,5 @@ email:
     confirm_mailaddress: Confirm your mailaddress
     reset_password: Enter a new password
     sincerely: Sincerely
+    new_account_details_user_title: Your login details
+    new_account_details_user_body: Your account has been created. You can login
