@@ -8,9 +8,12 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\CoreBundle\Validator\ErrorElement;
 
 class UserAdmin extends Admin
 {
+    private $randomPassword;
+    
     protected $datagridValues = array(
         '_page' => 1,
         '_sort_order' => 'ASC',
@@ -99,16 +102,44 @@ class UserAdmin extends Admin
         //$collection->remove('create');
     }
     
+    public function validate(ErrorElement $errorElement, $object)
+    {
+        // find object with the same uniqueField-value
+        $other = $this->modelManager->findOneBy($this->getClass(), array('email' => $object->getEmail()));
+
+        if (null !== $other && $other->getId() != $object->getId()) {
+            $errorElement
+                ->with('email')
+                ->addViolation($this->getConfigurationPool()->getContainer()->get('translator')->trans('validator.email_exists', array(), 'fbeen_user'))
+                ->end();
+        }
+    }
+
     /*
      * Nieuwe User? Genereer een password en stuur een email naar het mailadres
      */
     public function prePersist($user)
     {
-        $randomPassword = $this->random_string();
-        $encoder = $this->getConfigurationPool()->getContainer()->get('security.password_encoder');
-        $user->setPassword($encoder->encodePassword($user, $randomPassword));
+        $container = $this->getConfigurationPool()->getContainer();
+
+        $this->randomPassword = $this->random_string();
+        $encoder = $container->get('security.password_encoder');
+        $user->setPassword($encoder->encodePassword($user, $this->randomPassword));
         $user->setLocked(false);
-        $this->sendNewAccountDetailsEmail($user, $randomPassword);
+        
+        }
+    
+    /*
+     * Nieuwe User? Genereer een password en stuur een email naar het mailadres
+     */
+    public function postPersist($user)
+    {
+        $container = $this->getConfigurationPool()->getContainer();
+
+        $this->sendNewAccountDetailsEmail($user, $this->randomPassword);
+        
+        $flashBag = $container->get('session')->getFlashBag();
+        $flashBag->add('warning', $container->get('translator')->trans('flash.login_details_sent', array(), 'fbeen_user') . ' ' . $user->getEmail());
     }
     
     private function sendNewAccountDetailsEmail($user, $password)

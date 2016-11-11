@@ -137,3 +137,6 @@ email:
     sincerely: Sincerely
     new_account_details_user_title: Your login details
     new_account_details_user_body: Your account has been created. You can login
+
+flash:
+    login_details_sent: Login Credentials has been sent to
