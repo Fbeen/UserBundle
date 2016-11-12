@@ -56,21 +56,14 @@ trait UserTrait
     private $created;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="last_request", type="datetime", nullable=true)
-     */
-    private $lastRequest;
-
-    /**
      * @ORM\Column(name="enabled", type="boolean")
      */
-    private $enabled;
+    private $enabled = true;
 
     /**
      * @ORM\Column(name="locked", type="boolean")
      */
-    private $locked;
+    private $locked = true;
 
     /**
      * @ORM\Column(name="hidden", type="boolean")
@@ -92,7 +85,7 @@ trait UserTrait
      *
      * @ORM\Column(name="roles", type="array")
      */
-    private $roles;
+    private $roles = array('ROLE_USER');
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -104,19 +97,6 @@ trait UserTrait
      */
     private $google;
 
-    public function __construct() {
-        $this->created = new \DateTime();
-        $this->lastRequest = new \DateTime();
-        $this->enabled = true;
-        $this->locked = true;
-        $this->roles = array('ROLE_USER');
-    }
-
-    public function __toString()
-    {
-        return $this->username;
-    }
-    
     public function getUsername()
     {
         return $this->username;
@@ -465,30 +445,6 @@ trait UserTrait
     public function getTokenRequested()
     {
         return $this->tokenRequested;
-    }
-
-    /**
-     * Set lastRequest
-     *
-     * @param \DateTime $lastRequest
-     *
-     * @return User
-     */
-    public function setLastRequest($lastRequest)
-    {
-        $this->lastRequest = $lastRequest;
-
-        return $this;
-    }
-
-    /**
-     * Get lastRequest
-     *
-     * @return \DateTime
-     */
-    public function getLastRequest()
-    {
-        return $this->lastRequest;
     }
 
     /**

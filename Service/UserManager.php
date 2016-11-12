@@ -45,6 +45,7 @@ class UserManager
     public function createUser(UserInterface $user)
     {
         $this->updatePassword($user);
+        $user->setCreated(new \DateTime());
         
         $this->em->persist($user);
         $this->em->flush();

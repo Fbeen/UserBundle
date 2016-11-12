@@ -105,7 +105,7 @@ class UserAdmin extends Admin
     public function validate(ErrorElement $errorElement, $object)
     {
         // find object with the same uniqueField-value
-        $other = $this->modelManager->findOneBy($this->getClass(), array('email' => $object->getEmail()));
+        $other = $this->getConfigurationPool()->getContainer()->get('fbeen.user.user_manager')->findUserByEmail($object->getEmail());
 
         if (null !== $other && $other->getId() != $object->getId()) {
             $errorElement
@@ -125,6 +125,7 @@ class UserAdmin extends Admin
         $this->randomPassword = $this->random_string();
         $encoder = $container->get('security.password_encoder');
         $user->setPassword($encoder->encodePassword($user, $this->randomPassword));
+        $user->setCreated(new \DateTime());
         $user->setLocked(false);
         
         }
