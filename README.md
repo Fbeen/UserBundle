@@ -165,7 +165,7 @@ fbeen_mailer:
 Full configuration with default values:
 ```
 fbeen_user:
-	user_entity: AppBundle\Entity\User
+    user_entity: AppBundle\Entity\User
     form_types:
         change_password: Fbeen\UserBundle\Form\ChangePasswordType
         profile: Fbeen\UserBundle\Form\ProfileType
@@ -178,10 +178,17 @@ fbeen_user:
     password_on_profile_edit: false
     register:
         confirm_email: true
-        admin_approval: false
+        admin_approval: true
+    available_roles:
+        -
+            role: ROLE_USER
+            label: Normal user
+        -
+            role: ROLE_ADMIN
+            label: Administrator           
     providers: # optional
         Facebook:
-        	key: xxxxxxxxxxxxxxx
+            key: xxxxxxxxxxxxxxx
             secret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             scope: email
             image: "bundles/fbeenuser/images/facebook.png"
@@ -191,17 +198,20 @@ fbeen_user:
             image: "bundles/fbeenuser/images/google.png"
         # more providers
     emails_to_admins:
-    	approve_new_account:
-        	template: FbeenUserBundle:Email:approve_new_account.html.twig
+        approve_new_account:
+            template: FbeenUserBundle:Email:approve_new_account.html.twig
         register_confirmation:
             enabled: false
-        	template: FbeenUserBundle:Email:register_confirmation_admin.html.twig
+            template: FbeenUserBundle:Email:register_confirmation_admin.html.twig
     emails_to_users:
-    	confirm_your_mailaddress:
-        	template: FbeenUserBundle:Email:confirm_your_mailaddress.html.twig
+        confirm_your_mailaddress:
+            template: FbeenUserBundle:Email:confirm_your_mailaddress.html.twig
         register_confirmation:
             enabled: true
-        	template: FbeenUserBundle:Email:register_confirmation_user.html.twig
+            template: FbeenUserBundle:Email:register_confirmation_user.html.twig
+        new_account_details:
+            enabled: true
+            template: FbeenUserBundle:Email:new_account_details_user.html.twig
 ```
 If you would like to render the formfields on bootstrap style:
 ```
