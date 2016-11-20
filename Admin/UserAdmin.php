@@ -122,7 +122,7 @@ class UserAdmin extends Admin
     {
         $container = $this->getConfigurationPool()->getContainer();
 
-        $this->randomPassword = $this->random_string();
+        $this->randomPassword = $container->get('fbeen.user.user_manager')->generateRandomPassword();
         $encoder = $container->get('security.password_encoder');
         $user->setPassword($encoder->encodePassword($user, $this->randomPassword));
         $user->setCreated(new \DateTime());
@@ -163,19 +163,5 @@ class UserAdmin extends Admin
                 ->sendMail()
             ;
         }
-    }
-
-    private function random_string($length = 8)
-    {
-        $alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*/-+';
-        $str = '';
-        
-        $alphamax = strlen($alphabet) - 1;
-
-        for ($i = 0; $i < $length; ++$i) {
-            $str .= $alphabet[random_int(0, $alphamax)];
-        }
-        
-        return $str;
     }
 }
