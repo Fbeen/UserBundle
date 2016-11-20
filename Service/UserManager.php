@@ -42,11 +42,8 @@ class UserManager
         return $this->em->getRepository($this->container->getParameter('fbeen_user.user_entity'))->findOneBy(array('confirmation_token' => $token));
     }
     
-    public function createUser(UserInterface $user, $withRandomPassword = true)
+    public function createUser(UserInterface $user)
     {
-        if($withRandomPassword)
-            $user->setPlainPassword($this->generateRandomPassword());
-        
         $this->updatePassword($user);
         $user->setCreated(new \DateTime());
         
@@ -64,7 +61,7 @@ class UserManager
     {
         $encoder = $this->container->get('security.password_encoder');
         
-        if (0 !== strlen($password = $user->getPlainPassword())) {
+        if (0 !== strlen($user->getPlainPassword())) {
             $user->setPassword($encoder->encodePassword($user, $user->getPlainPassword()));
             $user->eraseCredentials();
         }
