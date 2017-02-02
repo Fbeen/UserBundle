@@ -37,13 +37,7 @@ class UserAdmin extends Admin
     // Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $choices = array();
-        $roles = $this->getConfigurationPool()->getContainer()->getParameter('fbeen_user.available_roles');
-        
-        foreach($roles as $role)
-        {
-            $choices[$role['label']] = $role['role'];
-        }
+        $choices = $this->getAvailableRoles();
         
         $formMapper
             ->add('username', NULL, array('label' => 'Gebruiksersnaam'))
@@ -143,6 +137,41 @@ class UserAdmin extends Admin
         $flashBag->add('warning', $container->get('translator')->trans('flash.login_details_sent', array(), 'fbeen_user') . ' ' . $user->getEmail());
     }
     
+    public function preUpdate($user)
+    {
+        /*
+         * If this user has any roles that are not listed in the available roles configuration then we dont want to lose those roles from the user entity.
+         * On this manner we can provide "hidden" or "not editable roles" while we still can add or delete the editable roles
+         */
+        $em = $this->getModelManager()->getEntityManager($this->getClass());
+        $original = $em->getUnitOfWork()->getOriginalEntityData($user);
+        
+        foreach($original['roles'] as $role)
+        {
+            if(!in_array($role, $this->getAvailableRoles()))
+            {
+                $user->addRole($role);
+            }
+        }
+    }
+    
+    /**
+     * This function creates an associative array with the roles that are defined in the configuration
+     * 
+     * @return array An associative array with available roles
+     */
+    private function getAvailableRoles()
+    {
+        $availableRoles = array();
+        
+        foreach($this->getConfigurationPool()->getContainer()->getParameter('fbeen_user.available_roles') as $role)
+        {
+            $availableRoles[$role['label']] = $role['role'];
+        }
+        
+        return $availableRoles;
+    }
+
     private function sendNewAccountDetailsEmail($user, $password)
     {
         $container = $this->getConfigurationPool()->getContainer();
