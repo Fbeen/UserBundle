@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormError;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Register controller.
@@ -35,7 +36,12 @@ class RegisterController extends Controller
             $request->getSession()->remove('register.data');
         }
         
-        $form = $this->createForm($this->container->getParameter('fbeen_user.form_types.register'), $user, array(
+        $formType = $this->container->getParameter('fbeen_user.form_types.register');
+        if(Kernel::VERSION_ID < 30000) {
+            $formType = new $formType;
+        }
+        
+        $form = $this->createForm($formType, $user, array(
             'data_class' => $this->container->getParameter('fbeen_user.user_entity'),            
         ));
         $form->handleRequest($request);

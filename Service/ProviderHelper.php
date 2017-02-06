@@ -2,6 +2,7 @@
 
 namespace Fbeen\UserBundle\Service;
 
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Security;
@@ -107,7 +108,12 @@ class ProviderHelper
     {
         $firewall = $this->container->getParameter('fbeen_user.firewall');
         $token = new UsernamePasswordToken($user, null, $firewall, $user->getRoles());
-        $this->container->get("security.context")->setToken($token); //now the user is logged in
+        
+        if(Kernel::VERSION_ID < 30000) {
+            $this->container->get("security.context")->setToken($token); //now the user is logged in
+        } else {
+            $this->container->get("security.token_storage")->setToken($token); //now the user is logged in
+        }
 
         //now dispatch the login event
         $request = $this->container->get('request_stack')->getCurrentRequest();

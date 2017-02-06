@@ -32,7 +32,12 @@ class ProfileController extends Controller
     {
         $user = $this->getUser();
         
-        $form = $this->createForm($this->container->getParameter('fbeen_user.form_types.profile'), $user, array(
+        $formType = $this->container->getParameter('fbeen_user.form_types.profile');
+        if(Kernel::VERSION_ID < 30000) {
+            $formType = new $formType;
+        }
+        
+        $form = $this->createForm($formType, $user, array(
             'data_class' => $this->container->getParameter('fbeen_user.user_entity'),
             'password_on_profile_edit' => $this->container->getParameter('fbeen_user.password_on_profile_edit')
         ));

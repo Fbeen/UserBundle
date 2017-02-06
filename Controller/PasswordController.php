@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -31,7 +32,12 @@ class PasswordController extends Controller
     {
         $user = $this->getUser();
         
-        $form = $this->createForm($this->container->getParameter('fbeen_user.form_types.change_password'), $user, array(
+        $formType = $this->container->getParameter('fbeen_user.form_types.change_password');
+        if(Kernel::VERSION_ID < 30000) {
+            $formType = new $formType;
+        }
+        
+        $form = $this->createForm($formType, $user, array(
             'data_class' => $this->container->getParameter('fbeen_user.user_entity'),
         ));
         $form->handleRequest($request);
@@ -72,7 +78,7 @@ class PasswordController extends Controller
         $user = $this->getUser();
         
         $form = $this->createFormBuilder()
-            ->add('email', 'Symfony\Component\Form\Extension\Core\Type\EmailType', array(
+            ->add('email', 'email', array(
                 'label' => 'reset1.form.email',
                 'constraints' => array(
                     new NotBlank(),
@@ -137,7 +143,12 @@ class PasswordController extends Controller
             throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
         }
         
-        $form = $this->createForm($this->container->getParameter('fbeen_user.form_types.change_password'), $user, array(
+        $formType = $this->container->getParameter('fbeen_user.form_types.change_password');
+        if(Kernel::VERSION_ID < 30000) {
+            $formType = new $formType;
+        }
+        
+        $form = $this->createForm($formType, $user, array(
             'ask_old_password' => FALSE
         ));
 
