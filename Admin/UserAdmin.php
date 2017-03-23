@@ -20,6 +20,11 @@ class UserAdmin extends Admin
         '_sort_by' => 'username',
     );
 
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('credentials', $this->getRouterIdParameter().'/credentials');
+    }
+
     /*
      * Verberg mijn eigen account
      */
@@ -43,6 +48,12 @@ class UserAdmin extends Admin
             ->add('username', NULL, array('label' => 'Gebruiksersnaam'))
             ->add('email',  NULL, array('label' => 'Email'))
             ->add('enabled',  'checkbox', array('label' => 'Ingeschakeld'))
+            ->add('send_password',  'checkbox', array(
+                'label' => 'Stuur de gebruiker direct zijn inloggegevens',
+                'data' => true,
+                'mapped' => false,
+                'required' => false
+            ))
             ->add('roles',  'choice', array(
                 'label' => 'Rechten',
                 'choices' => $choices,
@@ -72,6 +83,9 @@ class UserAdmin extends Admin
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
+                    'clone' => array(
+                        'template' => 'FbeenUserBundle:Admin:list__action_credentials.html.twig'
+                    )
                 )
             ))
         ;
@@ -88,12 +102,6 @@ class UserAdmin extends Admin
             ->add('created',  NULL, array('label' => 'Created'))
             ->add('roles',  NULL, array('label' => 'Roles'))
         ;
-    }
-    
-    protected function configureRoutes(RouteCollection $collection)
-    {
-        // to remove a single route
-        //$collection->remove('create');
     }
     
     public function validate(ErrorElement $errorElement, $object)
@@ -115,14 +123,13 @@ class UserAdmin extends Admin
     public function prePersist($user)
     {
         $container = $this->getConfigurationPool()->getContainer();
-
+        
         $this->randomPassword = $container->get('fbeen.user.user_manager')->generateRandomPassword();
         $encoder = $container->get('security.password_encoder');
         $user->setPassword($encoder->encodePassword($user, $this->randomPassword));
         $user->setCreated(new \DateTime());
         $user->setLocked(false);
-        
-        }
+    }
     
     /*
      * Nieuwe User? Genereer een password en stuur een email naar het mailadres
@@ -131,10 +138,13 @@ class UserAdmin extends Admin
     {
         $container = $this->getConfigurationPool()->getContainer();
 
-        $this->sendNewAccountDetailsEmail($user, $this->randomPassword);
-        
-        $flashBag = $container->get('session')->getFlashBag();
-        $flashBag->add('warning', $container->get('translator')->trans('flash.login_details_sent', array(), 'fbeen_user') . ' ' . $user->getEmail());
+        if($this->getForm()->get('send_password')->getData())
+        {
+            $container->get('fbeen.user.user_manager')->sendNewAccountDetailsEmail($user, $this->randomPassword);
+
+            $flashBag = $container->get('session')->getFlashBag();
+            $flashBag->add('warning', $container->get('translator')->trans('flash.login_details_sent', array(), 'fbeen_user') . ' ' . $user->getEmail());
+        }
     }
     
     public function preUpdate($user)
@@ -170,27 +180,5 @@ class UserAdmin extends Admin
         }
         
         return $availableRoles;
-    }
-
-    private function sendNewAccountDetailsEmail($user, $password)
-    {
-        $container = $this->getConfigurationPool()->getContainer();
-        
-        if($container->getParameter('fbeen_user.emails_to_users.new_account_details.enabled'))
-        {
-            /*
-             * send a confirmation email to the user with his credentials
-             */
-             $container->get('fbeen_mailer')
-                ->setTo($user->getEmail())
-                ->setSubject($container->get('translator')->trans('email.new_account_details_user_title', array(), 'fbeen_user'))
-                ->setTemplate($container->getParameter('fbeen_user.emails_to_users.new_account_details.template'))
-                ->setData(array(
-                    'user' => $user,
-                    'password' => $password
-                 ))
-                ->sendMail()
-            ;
-        }
     }
 }

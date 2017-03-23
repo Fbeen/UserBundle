@@ -80,4 +80,24 @@ class UserManager
         
         return $str;
     }
+
+    public function sendNewAccountDetailsEmail($user, $password)
+    {
+        if($this->container->getParameter('fbeen_user.emails_to_users.new_account_details.enabled'))
+        {
+            /*
+             * send a confirmation email to the user with his credentials
+             */
+             $this->container->get('fbeen_mailer')
+                ->setTo($user->getEmail())
+                ->setSubject($this->container->get('translator')->trans('email.new_account_details_user_title', array(), 'fbeen_user'))
+                ->setTemplate($this->container->getParameter('fbeen_user.emails_to_users.new_account_details.template'))
+                ->setData(array(
+                    'user' => $user,
+                    'password' => $password
+                 ))
+                ->sendMail()
+            ;
+        }
+    }
 }
