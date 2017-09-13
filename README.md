@@ -179,6 +179,8 @@ fbeen_user:
     register:
         confirm_email: true
         admin_approval: true
+    admin:
+        create_password: false
     available_roles:
         -
             role: ROLE_USER

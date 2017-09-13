@@ -9,11 +9,10 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\CoreBundle\Validator\ErrorElement;
+use Fbeen\UserBundle\Validator\Constraints\PasswordConstraint;
 
 class UserAdmin extends Admin
 {
-    private $randomPassword;
-    
     protected $datagridValues = array(
         '_page' => 1,
         '_sort_order' => 'ASC',
@@ -42,24 +41,41 @@ class UserAdmin extends Admin
     // Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $container = $this->getConfigurationPool()->getContainer();
+        
         $choices = $this->getAvailableRoles();
         
         $formMapper
             ->add('username', NULL, array('label' => 'Gebruiksersnaam'))
             ->add('email',  NULL, array('label' => 'Email'))
+        ;
+        
+        if($this->getSubject()->getId() < 1) { // if it is a new entity
+            
+            $this->getSubject()->setPlainPassword($container->get('fbeen.user.user_manager')->generateRandomPassword());
+            
+            if($container->getParameter('fbeen_user.admin.create_password') === true) {
+                $formMapper
+                    ->add('plainPassword',  'text', array(
+                        'label' => 'wachtwoord',
+                        'constraints' => array(
+                            new PasswordConstraint(),
+                        )
+                    ))
+                ;
+            }
+        }
+        
+        $formMapper
             ->add('enabled',  'checkbox', array('label' => 'Ingeschakeld'))
-            ->add('send_password',  'checkbox', array(
-                'label' => 'Stuur de gebruiker direct zijn inloggegevens',
-                'data' => true,
-                'mapped' => false,
-                'required' => false
-            ))
             ->add('roles',  'choice', array(
                 'label' => 'Rechten',
                 'choices' => $choices,
                 'multiple' => true
             ))
         ;
+        
+        
     }
 
     // Fields to be shown on filter forms
@@ -123,10 +139,9 @@ class UserAdmin extends Admin
     public function prePersist($user)
     {
         $container = $this->getConfigurationPool()->getContainer();
-        
-        $this->randomPassword = $container->get('fbeen.user.user_manager')->generateRandomPassword();
+
         $encoder = $container->get('security.password_encoder');
-        $user->setPassword($encoder->encodePassword($user, $this->randomPassword));
+        $user->setPassword($encoder->encodePassword($user, $user->getPlainPassword()));
         $user->setCreated(new \DateTime());
         $user->setLocked(false);
     }
@@ -138,13 +153,10 @@ class UserAdmin extends Admin
     {
         $container = $this->getConfigurationPool()->getContainer();
 
-        if($this->getForm()->get('send_password')->getData())
-        {
-            $container->get('fbeen.user.user_manager')->sendNewAccountDetailsEmail($user, $this->randomPassword);
+        $container->get('fbeen.user.user_manager')->sendNewAccountDetailsEmail($user, $user->getPlainPassword());
 
-            $flashBag = $container->get('session')->getFlashBag();
-            $flashBag->add('warning', $container->get('translator')->trans('flash.login_details_sent', array(), 'fbeen_user') . ' ' . $user->getEmail());
-        }
+        $flashBag = $container->get('session')->getFlashBag();
+        $flashBag->add('warning', $container->get('translator')->trans('flash.login_details_sent', array(), 'fbeen_user') . ' ' . $user->getEmail());
     }
     
     public function preUpdate($user)
