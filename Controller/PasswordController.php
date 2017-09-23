@@ -185,7 +185,7 @@ class PasswordController extends Controller
         $confirmationUrl = $this->generateUrl('fbeen_user_password_reset3', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
         
         $this->get('fbeen_mailer')
-           ->setTo($user->getEmail())
+           ->setTo([$user->getEmail() => $user->getUsername()])
            ->setSubject($this->get('translator')->trans('email.reset_your_password_title', array(), 'fbeen_user'))
            ->setTemplate($this->getParameter('fbeen_user.emails_to_users.reset_your_password.template'))
            ->setData(array(

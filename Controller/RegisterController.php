@@ -193,7 +193,7 @@ class RegisterController extends Controller
         $confirmationUrl = $this->generateUrl('fbeen_user_register_email_confirmation', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
         
         $this->get('fbeen_mailer')
-           ->setTo($user->getEmail())
+           ->setTo([$user->getEmail() => $user->getUsername()])
            ->setSubject($this->get('translator')->trans('email.confirm_your_mailaddress_title', array(), 'fbeen_user'))
            ->setTemplate($this->getParameter('fbeen_user.emails_to_users.confirm_your_mailaddress.template'))
            ->setData(array(
@@ -227,7 +227,7 @@ class RegisterController extends Controller
              * send a confirmation email to the user
              */
              $this->get('fbeen_mailer')
-                ->setTo($user->getEmail())
+                ->setTo([$user->getEmail() => $user->getUsername()])
                 ->setSubject($this->get('translator')->trans('email.register_confirmation_user_title', array(), 'fbeen_user'))
                 ->setTemplate($this->getParameter('fbeen_user.emails_to_users.register_confirmation.template'))
                 ->setData(array(
