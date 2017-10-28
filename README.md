@@ -154,10 +154,18 @@ $ bin/console fbeen:user:promote "My Name" ROLE_SUPER_ADMIN
 11) Add minimal configuration for the FbeenMailerBundle in `app/config/config.yml`
 ```
 fbeen_mailer:
+    company_name: "php-programmer.nl"
+    company_logo: "https://www.php-programmer.nl/images/logo.png"
     mailaddresses:
-        noreply: no-reply@example.com
-        general: info@example.com
-        admins: [admin1@gmail.com, admin2@hotmail.com]
+        noreply:
+            email: no-reply@example.com                   # required
+            name: example.com                             # optional
+        general:
+            email: info@example.com                       # required
+            name: example.com                             # optional
+        admins:
+            - {email: 'admin1@gmail.com', name: 'Admin1'} # at least one required, name is optional
+            - {email: 'admin2@gmail.com'}
 ```
 
 ## Configuration
