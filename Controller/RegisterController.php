@@ -98,22 +98,18 @@ class RegisterController extends Controller
     
     /**
      * Shows a page that tells the user to check his email to finish the registration
-     * 
-     * @Template("FbeenUserBundle:Register:confirmation.html.twig")
      */
     public function confirmEmailAction()
     {
-        return array(
+        return $this->render('@FbeenUser/Register/confirmation.html.twig', [
             'title' => 'confirm_email.title',
             'header' => 'confirm_email.header',
             'message' => 'confirm_email.text',
-        );
+        ]);
     }
     
     /**
      * On this page the user will land after clicking the link in the email.
-     * 
-     * @Template("FbeenUserBundle:Register:confirmation.html.twig")
      */
     public function emailConfirmationAction($token)
     {
@@ -137,11 +133,11 @@ class RegisterController extends Controller
             
             $manager->updateUser($user);
 
-            return array(
+            return $this->render('@FbeenUser/Register/confirmation.html.twig', [
                 'title' => 'email_confirmation.with_approval.title',
                 'header' => 'email_confirmation.with_approval.header',
                 'message' => 'email_confirmation.with_approval.message',
-            );
+            ]);
         }
         
         /*
@@ -153,33 +149,31 @@ class RegisterController extends Controller
 
         $manager->updateUser($user);
         
-        return array(
+        return $this->render('@FbeenUser/Register/confirmation.html.twig', [
             'title' => 'email_confirmation.without_approval.title',
             'header' => 'email_confirmation.without_approval.header',
             'message' => 'email_confirmation.without_approval.message',
-        );
+        ]);
     }
 
     /**
      * This is the end page of the registration with information for the user.
-     * 
-     * @Template("FbeenUserBundle:Register:confirmation.html.twig")
      */
     public function confirmationAction()
     {
         if($this->getParameter('fbeen_user.register.admin_approval')) {
-            return array(
+            return $this->render('@FbeenUser/Register/confirmation.html.twig', [
                 'title' => 'confirmation.with_approval.title',
                 'header' => 'confirmation.with_approval.header',
                 'message' => 'confirmation.with_approval.message',
-            );
+            ]);
         }
         
-        return array(
+        return $this->render('@FbeenUser/Register/confirmation.html.twig', [
             'title' => 'confirmation.without_approval.title',
             'header' => 'confirmation.without_approval.header',
             'message' => 'confirmation.without_approval.message',
-        );
+        ]);
     }
 
     /*

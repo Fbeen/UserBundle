@@ -5,16 +5,12 @@ namespace Fbeen\UserBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * Security controller.
  */
 class SecurityController extends Controller
 {
-    /**
-     * @Template()
-     */
     public function loginAction(Request $request)
     {
         $providers = $this->get('fbeen.user.provider_helper')->getProviders();
@@ -31,13 +27,13 @@ class SecurityController extends Controller
             $registerUrl = NULL;
         }
         
-        return array(
+        return $this->render('@FbeenUser/Security/login.html.twig', [
             // last username entered by the user
             'last_username' => $lastUsername,
             'error'         => $error,
             'providers' => $providers,
             'registerUrl' => $registerUrl
-        );
+        ]);
     }
     
     public function loginCheckAction()

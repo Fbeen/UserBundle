@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormError;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpKernel\Kernel;
 
 /**
@@ -16,18 +15,16 @@ class ProfileController extends Controller
 {
     /**
      * @Security("has_role('ROLE_USER')")
-     * @Template()
      */
     public function showAction(Request $request)
     {
-        return array(
+        return $this->render('@FbeenUser/Profile/show.html.twig', [
             'user' => $this->getUser()
-        );
+        ]);
     }
     
     /**
      * @Security("has_role('ROLE_USER')")
-     * @Template()
      */
     public function editAction(Request $request)
     {
@@ -66,9 +63,9 @@ class ProfileController extends Controller
             }
         }
 
-        return array(
+        return $this->render('@FbeenUser/Profile/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
-        );
+        ]);
     }
 }

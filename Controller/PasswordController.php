@@ -13,7 +13,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * Password controller.
@@ -26,7 +25,6 @@ class PasswordController extends Controller
      * On this page a user that is logged in can change his password.
      * 
      * @Security("has_role('ROLE_USER')")
-     * @Template()
      */
     public function changeAction(Request $request)
     {
@@ -62,16 +60,14 @@ class PasswordController extends Controller
             }
         }
         
-        return array(
+        return $this->render('@FbeenUser/Password/change.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
-        );
+        ]);
     }
     
     /**
      * Step 1 of the password reset procedure: Ask the user to give his email.
-     * 
-     * @Template()
      */
     public function reset1Action(Request $request)
     {
@@ -115,24 +111,21 @@ class PasswordController extends Controller
             }
         }
         
-        return array(
+        return $this->render('@FbeenUser/Password/reset1.html.twig', [
             'form' => $form->createView(),
-        );
+        ]);
     }
     
     /**
      * Step 2 of the password reset procedure: Give the user a message that he will receive an email.
-     * 
-     * @Template()
      */
     public function reset2Action(Request $request)
     {
+        return $this->render('@FbeenUser/Password/reset2.html.twig');
     }
     
     /**
      * Step 3 of the password reset procedure: Let the user change his password.
-     * 
-     * @Template()
      */
     public function reset3Action(Request $request, $token)
     {
@@ -166,18 +159,17 @@ class PasswordController extends Controller
             return $this->redirect($this->generateUrl('fbeen_user_password_reset4'));
         }
         
-        return array(
+        return $this->render('@FbeenUser/Password/reset3.html.twig', [
             'form' => $form->createView(),
-        );
+        ]);
     }
     
     /**
      * Step 4 of the password reset procedure: Give the user a confirmation that his password has changed.
-     * 
-     * @Template()
      */
     public function reset4Action()
     {
+        return $this->render('@FbeenUser/Password/reset4.html.twig');
     }
     
     private function sendResetPasswordConfirmationEmail(UserInterface $user)
