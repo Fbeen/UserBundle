@@ -5,6 +5,8 @@ namespace Fbeen\UserBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+
 
 class ProfileType extends AbstractType
 {
@@ -21,7 +23,7 @@ class ProfileType extends AbstractType
         
         if($options['password_on_profile_edit'])
         {
-            $builder->add('password', 'password', array('label' => 'edit.form.password', 'mapped' => false));
+            $builder->add('password', PasswordType::class, array('label' => 'edit.form.password', 'mapped' => false));
         }
     }
     
