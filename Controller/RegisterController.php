@@ -8,7 +8,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormError;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpKernel\Kernel;
 
 /**
@@ -18,8 +17,6 @@ class RegisterController extends Controller
 {
     /**
      * Shows and processes a registrationform
-     * 
-     * @Template()
      */
     public function registerAction(Request $request)
     {
@@ -93,10 +90,10 @@ class RegisterController extends Controller
 
         }
 
-        return array(
+        return $this->render('@FbeenUser/Register/register.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
-        );
+        ]);
     }
     
     /**
