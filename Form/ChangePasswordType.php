@@ -26,7 +26,7 @@ class ChangePasswordType extends AbstractType
         
         $builder
             ->add('plainPassword', RepeatedType::class, array(
-                'type' => 'password',
+                'type' => PasswordType::class,
                 'invalid_message' => 'The password fields must match.',
                 'options' => array('attr' => array('class' => 'password-field')),
                 'required' => true,
