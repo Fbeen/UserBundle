@@ -14,7 +14,7 @@
     ],
     "require" : {
         "php": "^5.5.9|^7.0",
-        "symfony/framework-bundle": "^2.7|^3.0",
+        "symfony/framework-bundle": "^2.8|^3.0",
         "fbeen/mailerbundle": "^1.0",
         "hybridauth/hybridauth": "^2.7"
     },
